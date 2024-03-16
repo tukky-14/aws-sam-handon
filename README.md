@@ -2,6 +2,11 @@
 
 ### 環境設定
 
+[AWS CLI](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/getting-started-install.html)のインストール
+[AWS SAM](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/install-sam-cli.html)のインストール
+
+<br/>
+
 ### ディレクトリ構成
 
 ```bash
