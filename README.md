@@ -53,6 +53,15 @@ sam init
 sam build
 ```
 
+-   デプロイ
+
+```bash
+sam deploy
+
+# ガイド付き
+sam deploy --guided
+```
+
 -   ローカル環境で API エンドポイントの起動
 
 ```bash

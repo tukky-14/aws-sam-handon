@@ -1,54 +1,64 @@
-AWSTemplateFormatVersion: "2010-09-09"
-Transform: AWS::Serverless-2016-10-31
+AWSTemplateFormatVersion: '2010-09-09' # CloudFormationテンプレートのバージョン
+Transform: AWS::Serverless-2016-10-31 # SAMのバージョンを指定
 Description: >
-  sam-app
+    sam-app
 
-  Sample SAM Template for sam-app
+    Sample SAM Template for sam-app
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
-  Function:
-    Timeout: 3
+    Function:
+        Timeout: 3 # すべてのLambda関数のデフォルトタイムアウトを3秒に設定
 
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: hello-world/
-      Handler: app.lambdaHandler
-      Runtime: nodejs18.x
-      Architectures:
-        - x86_64
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: get
+    HelloWorldFunction:
+        Type: AWS::Serverless::Function # Lambda関数のリソースタイプを定義
+        Properties:
+            CodeUri: hello-world/ # 関数のコードが存在するURI
+            Handler: app.lambdaHandler # Lambda関数のハンドラ
+            Runtime: nodejs18.x # 使用するNode.jsのバージョン
+            Architectures:
+                - x86_64 # 使用するアーキテクチャ
+            Events:
+                HelloWorld:
+                    Type: Api # Apiイベントタイプ。HTTPエンドポイントを定義
+                    Properties:
+                        Path: /hello # アクセスするパス
+                        Method: get # HTTPメソッド
+    GoodbyeWorldFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: goodbye-world/
+            Handler: app.lambdaHandler
+            Runtime: nodejs18.x
+            Architectures:
+                - x86_64
+            Events:
+                GoodbyeWorld:
+                    Type: Api
+                    Properties:
+                        Path: /goodbye
+                        Method: get
 
-  ApplicationResourceGroup:
-    Type: AWS::ResourceGroups::Group
-    Properties:
-      Name:
-        Fn::Sub: ApplicationInsights-SAM-${AWS::StackName}
-      ResourceQuery:
-        Type: CLOUDFORMATION_STACK_1_0
-  ApplicationInsightsMonitoring:
-    Type: AWS::ApplicationInsights::Application
-    Properties:
-      ResourceGroupName:
-        Ref: ApplicationResourceGroup
-      AutoConfigurationEnabled: "true"
+    ApplicationResourceGroup:
+        Type: AWS::ResourceGroups::Group # リソースグループのリソースタイプを定義
+        Properties:
+            Name:
+                Fn::Sub: ApplicationInsights-SAM-${AWS::StackName} # リソースグループの名前を定義
+            ResourceQuery:
+                Type: CLOUDFORMATION_STACK_1_0 # CloudFormationスタックをクエリタイプに使用
+    ApplicationInsightsMonitoring:
+        Type: AWS::ApplicationInsights::Application # Application Insightsアプリケーションのリソースタイプを定義
+        Properties:
+            ResourceGroupName:
+                Ref: ApplicationResourceGroup # リソースグループへの参照
+            AutoConfigurationEnabled: 'true' # 自動設定を有効にする
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: API Gateway endpoint URL for Prod stage for Hello World function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: Hello World Lambda Function ARN
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: Implicit IAM Role created for Hello World function
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+    HelloWorldApi:
+        Description: API Gateway endpoint URL for Prod stage for Hello World function # Hello World関数のProdステージのAPI GatewayエンドポイントURL
+        Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/'
+    HelloWorldFunction:
+        Description: Hello World Lambda Function ARN # Hello World Lambda関数のARN
+        Value: !GetAtt HelloWorldFunction.Arn
+    HelloWorldFunctionIamRole:
+        Description: Implicit IAM Role created for Hello World function # Hello World関数に対して暗黙的に作成されたIAMロール
+        Value: !GetAtt HelloWorldFunctionRole.Arn
