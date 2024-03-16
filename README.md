@@ -2,10 +2,10 @@
 
 ### 環境設定
 
-[Node.js](https://nodejs.org/en)
-[Docker](https://docs.docker.jp/desktop/install.html)
-[AWS CLI](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/getting-started-install.html)のインストール
-[AWS SAM](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/install-sam-cli.html)のインストール
+-   [Node.js](https://nodejs.org/en)
+-   [Docker](https://docs.docker.jp/desktop/install.html)
+-   [AWS CLI](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/getting-started-install.html)
+-   [AWS SAM](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/install-sam-cli.html)
 
 <br/>
 
